@@ -42,7 +42,7 @@ public class HelloController {
                 } catch (Exception e) {
                     continue;
                 }
-                if (jsonObject.containsKey("code")
+                if (jsonObject != null && jsonObject.containsKey("code")
                         && jsonObject.containsKey("data")) {
                     jsonObjects.add(jsonObject);
                 }
