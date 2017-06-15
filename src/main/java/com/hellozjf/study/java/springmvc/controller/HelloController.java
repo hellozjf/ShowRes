@@ -43,7 +43,8 @@ public class HelloController {
                     continue;
                 }
                 if (jsonObject != null && jsonObject.containsKey("code")
-                        && jsonObject.containsKey("data")) {
+                        && jsonObject.containsKey("data")
+                        && jsonObject.getJSONArray("data").size() != 0) {
                     jsonObjects.add(jsonObject);
                 }
             }

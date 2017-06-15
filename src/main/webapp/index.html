@@ -28,33 +28,7 @@
 	    var result=data;
 	    console.log(result);
 	});*/
-
-	function renew() {
-		// 		alert('renew');
-		$.ajax({
-			type : "POST",
-			url : "getRes.do",// baseURL
-			data : {},
-			dataType : "json",
-			success : function(ret) {
-				option.xAxis[0].data = ret.xdata;
-				option.series[0].data = ret.ydata;
-				myChart.setOption(option);
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(textStatus + errorThrown);
-				return false;
-			}
-		});
-	}
-
-	$('#renew').click(function() {
-		renew();
-	})
-	$(renew);
-</script>
-<script>
-	var myChart = echarts.init(document.getElementById('main'));
+    var myChart = echarts.init(document.getElementById('main'));
 	var option = {
 		color : [ '#3398DB' ],
 		title : {
@@ -74,7 +48,7 @@
 		},
 		xAxis : [ {
 			type : 'category',
-			data : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+			data : [ '1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1' ],
 			axisLabel : {
 				interval : 0,
 				rotate : 45
@@ -89,10 +63,33 @@
 		series : [ {
 			name : '搜索量',
 			type : 'bar',
-			data : [ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3 ]
+			data : [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ]
 		}, ]
 	};
+	function renew() {
 
-	myChart.setOption(option);
+		// 		alert('renew');
+		$.ajax({
+			type : "POST",
+			url : "getRes.do",// baseURL
+			data : {},
+			dataType : "json",
+			success : function(ret) {
+				option.xAxis[0].data = ret.xdata;
+				option.series[0].data = ret.ydata;
+				myChart.setOption(option);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(textStatus + errorThrown);
+				return false;
+			}
+		});
+		myChart.setOption(option);
+	}
+
+	$('#renew').click(function() {
+		renew();
+	})
+	$(renew);
 </script>
 </html>
