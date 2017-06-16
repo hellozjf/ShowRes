@@ -25,6 +25,8 @@ public class HelloController {
         JSONObject ret = new JSONObject();
         JSONArray xdata = new JSONArray();
         JSONArray ydata = new JSONArray();
+        String from = null;
+        String to = null;
 
         try {
             File file = new File("d:/res.txt");
@@ -60,6 +62,8 @@ public class HelloController {
                         xdata.add(array.getString(0));
                         ydata.add(array.getInteger(1));
                     }
+                    from = jsonObject.getString("from");
+                    to = jsonObject.getString("to");
                     break;
                 }
             }
@@ -69,6 +73,8 @@ public class HelloController {
 
         ret.put("xdata", xdata);
         ret.put("ydata", ydata);
+        ret.put("from", from.subSequence(0, 4) + "年" + from.subSequence(4, 6) + "月" + from.subSequence(6, 8) + "日" + from.subSequence(8, 10) + "时");
+        ret.put("to", to.subSequence(0, 4) + "年" + to.subSequence(4, 6) + "月" + to.subSequence(6, 8) + "日" + to.substring(8, 10) + "时");
         return ret.toJSONString();
     }
 }

@@ -6,90 +6,102 @@
 <meta name="keywords" content="keyword1,keyword2,keyword3">
 <meta name="description" content="this is my page">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+.right {
+  text-align: right;
+}
+</style>
 
 <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 
 </head>
 
 <body>
-	<button id="renew">Renew</button>
-	<div id="main" style="height: 400px;"></div>
+  <!--   <p id="title">宁波地区百度搜索关键字排名</p> -->
+  <div id="main" style="height: 400px;"></div>
+  <p id="date"></p>
+  <div class="right">
+    <button id="renew">Renew</button>
+  </div>
 </body>
 <script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="echarts-all.js"></script>
+<script type="text/javascript" src="echarts.min.js"></script>
 <script>
-	/* var fso = new ActiveXObject("Scripting.FileSystemObject");
-	var f = fso.OpenTextFile("res.txt", 1, true);
-	while(!f.AtEndOfStream) {
-		console.log(f.ReadLine);
-	}
-	f.close(); */
-	/*$.get("/res.txt", function (data, textStauts) {
-	    var result=data;
-	    console.log(result);
-	});*/
-    var myChart = echarts.init(document.getElementById('main'));
-	var option = {
-		color : [ '#3398DB' ],
-		title : {
-			text : '百度搜索排名前20个'
-		},
-		tooltip : {
-			trigger : 'axis',
-			axisPointer : { // 坐标轴指示器，坐标轴触发有效
-				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-			}
-		},
-		grid : {
-			left : '3%',
-			right : '4%',
-			bottom : '3%',
-			containLabel : true
-		},
-		xAxis : [ {
-			type : 'category',
-			data : [ '1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1' ],
-			axisLabel : {
-				interval : 0,
-				rotate : 45
-			},
-			axisTick : {
-				alignWithLabel : true
-			}
-		} ],
-		yAxis : [ {
-			type : 'value'
-		} ],
-		series : [ {
-			name : '搜索量',
-			type : 'bar',
-			data : [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ]
-		}, ]
-	};
-	function renew() {
+  /* var fso = new ActiveXObject("Scripting.FileSystemObject");
+  var f = fso.OpenTextFile("res.txt", 1, true);
+  while(!f.AtEndOfStream) {
+  	console.log(f.ReadLine);
+  }
+  f.close(); */
+  /*$.get("/res.txt", function (data, textStauts) {
+      var result=data;
+      console.log(result);
+  });*/
+  var myChart = echarts.init(document.getElementById('main'));
+  var option = {
+    color : [ '#3398DB' ],
+    title : {
+      text : '宁波地区百度搜索关键字排名',
+      subtext : '',
+      left : 'center',
+    },
+    tooltip : {
+      trigger : 'axis',
+      axisPointer : { // 坐标轴指示器，坐标轴触发有效
+        type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+//     grid : {
+//       left : '3%',
+//       right : '4%',
+//       bottom : '3%',
+//       containLabel : true
+//     },
+    xAxis : [ {
+      type : 'category',
+      data : [ '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1' ],
+      axisLabel : {
+        interval : 0,
+        rotate : 45
+      },
+      axisTick : {
+        alignWithLabel : true
+      }
+    } ],
+    yAxis : [ {
+      type : 'value'
+    } ],
+    series : [ {
+      name : '搜索量',
+      type : 'bar',
+      data : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    }, ]
+  };
+  function renew() {
 
-		// 		alert('renew');
-		$.ajax({
-			type : "POST",
-			url : "getRes.do",// baseURL
-			data : {},
-			dataType : "json",
-			success : function(ret) {
-				option.xAxis[0].data = ret.xdata;
-				option.series[0].data = ret.ydata;
-				myChart.setOption(option);
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(textStatus + errorThrown);
-				return false;
-			}
-		});
-		myChart.setOption(option);
-	}
+    // 		alert('renew');
+    $.ajax({
+      type : "POST",
+      url : "getRes.do",// baseURL
+      data : {},
+      dataType : "json",
+      success : function(ret) {
+        option.xAxis[0].data = ret.xdata;
+        option.series[0].data = ret.ydata;
+        option.title.subtext = ret.from + " 至 " + ret.to;
+        myChart.setOption(option);
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown) {
+        alert(textStatus + errorThrown);
+        return false;
+      }
+    });
+    myChart.setOption(option);
+  }
 
-	$('#renew').click(function() {
-		renew();
-	})
-	$(renew);
+  $('#renew').click(function() {
+    renew();
+  })
+  $(renew);
 </script>
 </html>
